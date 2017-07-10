@@ -12,11 +12,13 @@
     <script defer src="scripts/main.js"></script>
   </head>
   <body>
-    <audio controls src="media/dumbfunk.mp3"></audio>
-    <audio controls src="media/dumbfunk.mp3"></audio>
-    <!-- <form>
-      <input type="text" placeholder="music to search for">
-    </form> -->
+    <div id="fader">
+      <img src="media/simplefader.jpeg">
+    </div>
+
+    <audio id="ch0" controls src="media/dumbfunk.mp3"></audio>
+    <audio id="ch1" controls src="media/dumbfunk.mp3"></audio>
+    <input id="xfader" type="range" min="0" max="10">
 
 
   </body>

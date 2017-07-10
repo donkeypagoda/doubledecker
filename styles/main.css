@@ -1,0 +1,10 @@
+/*temp working css*/
+div {
+  border-width: 1px;
+  border-color: red;
+  border-style: solid;
+}
+img {
+    width: 85%;
+    height: 200px;
+}
