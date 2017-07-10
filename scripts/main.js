@@ -9,25 +9,22 @@ const source1 = audioCtx.createMediaElementSource(ch1);
 const gain0 = audioCtx.createGain();
 const gain1 = audioCtx.createGain();
 
-let mousePoint = 0;
 let faderValue = 5;
 
+source0.connect(gain0);
+gain0.connect(audioCtx.destination);
+
+source1.connect(gain1);
+gain1.connect(audioCtx.destination);
+
+
 function faderMath(faderValue){
-  let gainL = Math.abs(faderValue - 10);
-  console.log(gainL);
-  let gainR = faderValue;
-  console.log(gainR);
+  ch0.volume = Math.abs(faderValue - 1);
+  ch1.volume = faderValue;
 }
 
 // event handlers
 $("#xfader").on("input", function(event){
   faderValue = $("#xfader").val();
-  // console.log(faderValue);
   faderMath(faderValue);
-})
-
-// listener for the mouseover method
-// $("#fader").on("mousemove", function(event){
-//   console.log(event.offsetX);
-//   mousePoint = event.clientX;
-// });
+});
