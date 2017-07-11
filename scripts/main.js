@@ -1,7 +1,7 @@
 // the Web Audio Stuff
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-const ch0 = document.querySelector("#ch0")
-const ch1 = document.querySelector("#ch1")
+const ch0 = document.querySelector("#ch0");
+const ch1 = document.querySelector("#ch1");
 
 // local media
 // const source0 = audioCtx.createMediaElementSource(ch0);
@@ -43,8 +43,57 @@ Napster.init({
 
 let trackList = [];
 
+
 // ATTEMPTING THE OAUTH
-const redirectURL = "http://localhost:3000"
+const width = 700;
+const height = 400;
+const left = (screen.width / 2) - (width / 2);
+const top = (screen.height / 2) - (height / 2);
+const templateSource = document.getElementById('result-template').innerHTML
+const resultsTemplate = Handlebars.compile(templateSource);
+
+
+const napsterAPI = 'https://api.napster.com';
+const APIKEY = coniferNapsterKey;
+const oauthURL = `${napsterAPI}/oauth/authorize?client_id=${APIKEY}&response_type=code`;
+const redirectURI = "http://telepathic_lamppost.surge.sh";
+const loginButton = $("#loginButton");
+const loginSection = $("#login_section");
+const result = $("#result");
+
+
+function fetchUserData(accessToken){
+	return $.ajax({
+  	url: `${napsterAPI}/v2.1/me`,
+    headers: {
+      'Authorization': 'Bearer ' + accessToken
+    }
+  });
+}
+
+function login(){
+	window.addEventListener('message',(event) => {
+    var hash = JSON.parse(event.data);
+    if (hash.type === 'access_token') {
+      fetchUserData(hash.access_token)
+      	.then((data) => {
+        	loginSection.hide();
+          result.html(resultsTemplate(data.me));
+          result.show();
+        });
+    }
+  }, false);
+
+	window.open(
+  	`${oauthURL}&redirect_uri=${redirectURI}`,
+  	'Napster',
+    `menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=${width},height=${height},top=${top}, left=${left}`
+  );
+}
+
+loginButton.click(() => {
+ login();
+});
 
 
 

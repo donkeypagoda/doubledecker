@@ -11,6 +11,24 @@
     <script type="text/javascript" src="scripts/napster.js"></script>
     <script defer type="text/javascript" src="scripts/materialize.min.js"></script>
     <script defer type="text/javascript" src="scripts/main.js"></script>
+
+    <script id="result-template" type="text/x-handlebars-template">
+  <dl>
+    <img src="{{avatar}}">
+    <dt>User Name</dt>
+    <dd>{{realName}}</dd>
+    <dt>Display Name</dt>
+    <dd>{{screenName}}</dd>
+    <dt>Followers</dt>
+    <dd>{{followerCount}}</dd>
+    <dt>Profile</dt>
+    <dd><a href="https://app.napster.com/members/{{screenName}}" target="_blank">https://app.napster.com/members/{{screenName}}</a></dd>
+    <dt>Napster ID</dt>
+    <dd>{{id}}</dd>
+  </dl>
+</script>
+
+
   </head>
   <body>
     <div class="content">
@@ -23,9 +41,11 @@
         </audio>
         <input id="xfader" type="range" min="0" max="1.0" step="0.01" value="0.5">
       </div>
-      <div class="login_section">
+      <div id="login_section">
         <p>Login to napster here!</p>
-        <button class="btn">Log In!</button>
+        <button id="loginButton" class="btn">Log In!</button>
+      </div>
+      <div id="result">
       </div>
     </div>
   </body>
