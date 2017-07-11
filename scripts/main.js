@@ -28,3 +28,9 @@ $("#xfader").on("input", function(event){
   faderValue = $("#xfader").val();
   faderMath(faderValue);
 });
+
+
+Napster.init({
+  consumerKey: "NjFiOWQ5ODktYmI5OS00YzlmLWIzYmMtMTM4ZWQ5ODIyMzJk"
+});
+console.log("doggie");
