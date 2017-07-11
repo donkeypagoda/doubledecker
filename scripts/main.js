@@ -3,8 +3,13 @@ const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 const ch0 = document.querySelector("#ch0")
 const ch1 = document.querySelector("#ch1")
 
-const source0 = audioCtx.createMediaElementSource(ch0);
-const source1 = audioCtx.createMediaElementSource(ch1);
+// local media
+// const source0 = audioCtx.createMediaElementSource(ch0);
+// const source1 = audioCtx.createMediaElementSource(ch1);
+
+// webmedia
+const webSource0 = audioCtx.createBufferSource(ch0);
+const webSource0 = audioCtx.createBufferSource(ch1);
 
 const gain0 = audioCtx.createGain();
 const gain1 = audioCtx.createGain();
@@ -34,3 +39,28 @@ Napster.init({
   consumerKey: "NjFiOWQ5ODktYmI5OS00YzlmLWIzYmMtMTM4ZWQ5ODIyMzJk"
 });
 console.log("doggie");
+
+let trackList = [];
+
+function getTop(){
+  const url = "https://api.napster.com/v2.1/tracks/top?apikey=ZTk2YjY4MjMtMDAzYy00MTg4LWE2MjYtZDIzNjJmMmM0YTdm"
+  const xhr = $.getJSON(url);
+
+  xhr.done(function(data) {
+    if (xhr.status !== 200) {
+      return;
+    }
+    console.log(data);
+    console.log(data.tracks[0].previewURL);
+    // for (let i = 0; )
+    console.log($("#src0"));
+    let source = $("<source>")
+    source.prop("src", data.tracks[0].previewURL);
+    source.prop("type", "audio/mpeg");
+    $(".test").append(source);
+    // $("#ch0").load();
+    // $("#ch0").play();
+
+  });
+};
+getTop();
