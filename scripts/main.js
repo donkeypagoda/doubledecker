@@ -43,28 +43,36 @@ Napster.init({
 
 let trackList = [];
 
-function getTop(){
-  const url = "https://api.napster.com/v2.1/tracks/top?apikey=ZTk2YjY4MjMtMDAzYy00MTg4LWE2MjYtZDIzNjJmMmM0YTdm"
-  const xhr = $.getJSON(url);
-
-  xhr.done(function(data) {
-    if (xhr.status !== 200) {
-      return;
-    }
-    console.log(data);
-    console.log(data.tracks[0].previewURL);
-    // for (let i = 0; )
-    console.log($("#src0"));
-    let source0 = $("<source>")
-    source0.prop("src", data.tracks[0].previewURL);
-    source0.prop("type", "audio/mpeg");
-    $("#ch0").append(source0);
-    let source1 = $("<source>")
-    source1.prop("src", data.tracks[1].previewURL);
-    source1.prop("type", "audio/mpeg");
-    $("#ch1").append(source1);
+// ATTEMPTING THE OAUTH
+const redirectURL = "http://localhost:3000"
 
 
-  });
-};
-getTop();
+
+
+// THIS IS THE NON-OAUTH METHOD FOR 30SECOND SAMPLES
+
+// function getTop(){
+//   const url = "https://api.napster.com/v2.1/tracks/top?apikey=ZTk2YjY4MjMtMDAzYy00MTg4LWE2MjYtZDIzNjJmMmM0YTdm"
+//   const xhr = $.getJSON(url);
+//
+//   xhr.done(function(data) {
+//     if (xhr.status !== 200) {
+//       return;
+//     }
+//     console.log(data);
+//     console.log(data.tracks[0].previewURL);
+//     // for (let i = 0; )
+//     console.log($("#src0"));
+//     let source0 = $("<source>")
+//     source0.prop("src", data.tracks[0].previewURL);
+//     source0.prop("type", "audio/mpeg");
+//     $("#ch0").append(source0);
+//     let source1 = $("<source>")
+//     source1.prop("src", data.tracks[1].previewURL);
+//     source1.prop("type", "audio/mpeg");
+//     $("#ch1").append(source1);
+//
+//
+//   });
+// };
+// getTop();
