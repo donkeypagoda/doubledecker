@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>doubleDecker</title>
-    <link type="text/css" rel="stylesheet" href="styles/materialize.min.css">
-    <link  type="text/css" rel="stylesheet" href="styles/main.css">
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script defer src="scripts/main.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="styles/materialize.min.css" media="screen,projection">
+    <link type="text/css" rel="stylesheet" href="styles/main.css">
+    <script defer type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script defer type="text/javascript" src="scripts/materialize.min.js"></script>
+    <script defer type="text/javascript" src="scripts/main.js"></script>
   </head>
   <body>
-
-    <audio id="ch0" controls src="media/dumbfunk.mp3"></audio>
-    <audio id="ch1" controls src="media/dumbfunk.mp3"></audio>
-    <input id="xfader" type="range" min="0" max="1.0" step="0.01" value="0.5">
-
+    <div class="content">
+      <div class="row">
+        <audio id="ch0" controls src="media/dumbfunk.mp3"></audio>
+        <audio id="ch1" controls src="media/dumblounge.mp3"></audio>
+        <input id="xfader" type="range" min="0" max="1.0" step="0.01" value="0.5">
+      </div>
+    </div>
   </body>
 </html>
