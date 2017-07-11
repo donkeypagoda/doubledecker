@@ -43,26 +43,23 @@ Napster.init({
 
 let trackList = [];
 
-
-// ATTEMPTING THE OAUTH
 const width = 700;
 const height = 400;
 const left = (screen.width / 2) - (width / 2);
 const top = (screen.height / 2) - (height / 2);
-const templateSource = document.getElementById('result-template').innerHTML
+const $loginButton = $('#btn-login');
+const $loginSection = $('#login-section');
+const $result = $('#result');
+const templateSource = document.getElementById('result-template').innerHTML;
 const resultsTemplate = Handlebars.compile(templateSource);
 
-
 const napsterAPI = 'https://api.napster.com';
-const APIKEY = coniferNapsterKey;
+const APIKEY = 'ZTk2YjY4MjMtMDAzYy00MTg4LWE2MjYtZDIzNjJmMmM0YTdm';
 const oauthURL = `${napsterAPI}/oauth/authorize?client_id=${APIKEY}&response_type=code`;
-const redirectURI = "http://telepathic_lamppost.surge.sh";
-const loginButton = $("#loginButton");
-const loginSection = $("#login_section");
-const result = $("#result");
 
+const REDIRECT_URI = 'https://developer.napster.com/jsfiddle_proxy';
 
-function fetchUserData(accessToken){
+function fetchUserData (accessToken) {
 	return $.ajax({
   	url: `${napsterAPI}/v2.1/me`,
     headers: {
@@ -71,29 +68,82 @@ function fetchUserData(accessToken){
   });
 }
 
-function login(){
+function login() {
 	window.addEventListener('message',(event) => {
     var hash = JSON.parse(event.data);
     if (hash.type === 'access_token') {
       fetchUserData(hash.access_token)
       	.then((data) => {
-        	loginSection.hide();
-          result.html(resultsTemplate(data.me));
-          result.show();
+        	$loginSection.hide();
+          $result.html(resultsTemplate(data.me));
+          $result.show();
         });
     }
   }, false);
 
 	window.open(
-  	`${oauthURL}&redirect_uri=${redirectURI}`,
+  	`${oauthURL}&redirect_uri=${REDIRECT_URI}`,
   	'Napster',
     `menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=${width},height=${height},top=${top}, left=${left}`
   );
 }
 
-loginButton.click(() => {
+$loginButton.click(() => {
  login();
 });
+
+
+
+// ATTEMPTING THE OAUTH
+// const width = 700;
+// const height = 400;
+// const left = (screen.width / 2) - (width / 2);
+// const top = (screen.height / 2) - (height / 2);
+// const templateSource = document.getElementById('result-template').innerHTML;
+// const resultsTemplate = Handlebars.compile(templateSource);
+// console.log("tacos");
+//
+// const napsterAPI = 'https://api.napster.com';
+// const APIKEY = coniferNapsterKey;
+// const oauthURL = `${napsterAPI}/oauth/authorize?client_id=${APIKEY}&response_type=code`;
+// const redirectURI = "http://telepathic_lamppost.surge.sh";
+// const loginButton = $("#loginButton");
+// const loginSection = $("#login_section");
+// const result = $("#result");
+//
+//
+// function fetchUserData(accessToken){
+// 	return $.ajax({
+//   	url: `${napsterAPI}/v2.1/me`,
+//     headers: {
+//       'Authorization': 'Bearer ' + accessToken
+//     }
+//   });
+// }
+//
+// function login(){
+// 	window.addEventListener('message',(event) => {
+//     var hash = JSON.parse(event.data);
+//     if (hash.type === 'access_token') {
+//       fetchUserData(hash.access_token)
+//       	.then((data) => {
+//         	loginSection.hide();
+//           result.html(resultsTemplate(data.me));
+//           result.show();
+//         });
+//     }
+//   }, false);
+//
+// 	window.open(
+//   	`${oauthURL}&redirect_uri=${redirectURI}`,
+//   	'Napster',
+//     `menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=${width},height=${height},top=${top}, left=${left}`
+//   );
+// }
+//
+// loginButton.click(() => {
+//  login();
+// });
 
 
 
