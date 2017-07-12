@@ -13,17 +13,30 @@ const webSource1 = audioCtx.createBufferSource(ch1);
 
 const gain0 = audioCtx.createGain();
 const gain1 = audioCtx.createGain();
+const tuna = new Tuna(audioCtx);
 
-let faderValue = 0.5;
+const delay = new tuna.Delay({
+    feedback: 0.45,    //0 to 1+
+    delayTime: 750,    //1 to 10000 milliseconds
+    wetLevel: 0.85,    //0 to 1+
+    dryLevel: 0.2,       //0 to 1+
+    cutoff: 2000,      //cutoff frequency of the built in lowpass-filter. 20 to 22050
+    bypass: 0
+});
 
 // source0.connect(gain0);
-webSource0.connect(gain0);
+webSource0.connect(delay);
+// gain0input.connect(delay);
+delay.connect(gain0);
 gain0.connect(audioCtx.destination);
 
 // source1.connect(gain1);
 webSource1.connect(gain1);
 gain1.connect(audioCtx.destination);
 
+
+// INTERFACE BULLSHIT
+let faderValue = 0.5;
 
 function faderMath(faderValue){
   ch0.volume = Math.abs(faderValue - 1);
@@ -36,139 +49,30 @@ $("#xfader").on("input", function(event){
   faderMath(faderValue);
 });
 
-
-
-Napster.init({
-  consumerKey: coniferNapsterKey,
-  // version: "v2.2",
-  // catalog: "EN",
-  // player: "#player-frame"
+$("#delay").on("input", function(event){
+  delayValue = $("#delay").val();
 });
 
 
+// THIS IS THE NON-OAUTH METHOD FOR 30SECOND SAMPLES FROM NAPSTER
+function getTop(){
+  const url = "https://api.napster.com/v2.1/tracks/top?apikey=ZTk2YjY4MjMtMDAzYy00MTg4LWE2MjYtZDIzNjJmMmM0YTdm"
+  const xhr = $.getJSON(url);
 
-const searchString = window.location.search.substring(1)
-const searchStringObj = { [searchString.split('=')[0]] : searchString.split('=')[1]};
-// console.log(searchStringObj);
-
-if(searchStringObj.code){
-  window.localStorage.setItem("code", searchStringObj.code);
-  window.location = "/";
-}
-
-if (window.localStorage.getItem("code") != null){
-  $("#login_section").hide();
-}
-
-
-
-
-
-// ATTEMPTING THE OAUTH
-// const width = 700;
-// const height = 400;
-// const left = (screen.width / 2) - (width / 2);
-// const upper = (screen.height / 2) - (height / 2);
-// const templateSource = document.getElementById('result-template').innerHTML;
-// const resultsTemplate = Handlebars.compile(templateSource);
-// console.log(templateSource);
-// console.log(resultsTemplate);
+  xhr.done(function(data) {
+    if (xhr.status !== 200) {
+      return;
+    }
+    let source0 = $("<source>")
+    source0.prop("src", data.tracks[1].previewURL);
+    source0.prop("type", "audio/mpeg");
+    $("#ch0").append(source0);
+    let source1 = $("<source>")
+    source1.prop("src", data.tracks[2].previewURL);
+    source1.prop("type", "audio/mpeg");
+    $("#ch1").append(source1);
 
 
-const napsterAPI = 'https://api.napster.com';
-const APIKEY = "NjFiOWQ5ODktYmI5OS00YzlmLWIzYmMtMTM4ZWQ5ODIyMzJk";
-const oauthURL = `${napsterAPI}/oauth/authorize?client_id=${APIKEY}&response_type=code`;
-const redirectURI = "http://localhost:3000";
-const loginButton = $("#loginButton");
-const loginSection = $("#login_section");
-const result = $("#result");
-
-
-// function fetchUserData(accessToken){
-//
-// 	return $.ajax({
-//   	url: `https://api.napster.com/v2.2/me`,
-//     headers: {
-//       'Authorization': 'Bearer ' + accessToken
-//     }
-//   });
-// }
-
-// function login(){
-// 	window.addEventListener('message',(event) => {
-//     var hash = JSON.parse(event.data);
-//     if (hash.type === 'access_token') {
-//       fetchUserData(hash.access_token)
-//       	.then((data) => {
-//         	// loginSection.hide();
-//           result.html(resultsTemplate(data.me));
-//           result.show();
-//         });
-//     }
-//   }, false);
-//
-//
-// }
-$("button").on("click", () => {
-  window.location = `${oauthURL}&redirect_uri=${redirectURI}`;
-
-});
-
-// Scott's code for obtaining the code/token
-
-
-if (window.localStorage.getItem("code")) {
-  // console.log('code okay!');
-  $.ajax({
-   url: "https://api.napster.com/oauth/access_token",
-   method: "POST",
-   data: {
-     client_id: coniferNapsterKey,
-     client_secret: coniferNapsterSecret,
-     response_type: 'code',
-     code: window.localStorage.getItem("code"),
-     grant_type: 'authorization_code',
-    //  redirect_uri: "http://elastic-eggs.surge.sh/"
-   }
-  }).done((data) => {
-    console.log('data', data);
-
-    Napster.member.set({
-      accessToken: data.access_token,
-      refreshToken: data.refresh_token
-    });
-
-
-
-  }).fail((err) => {
-    console.log('error', err);
-  })
-}
-
-
-// THIS IS THE NON-OAUTH METHOD FOR 30SECOND SAMPLES
-// function getTop(){
-//   const url = "https://api.napster.com/v2.1/tracks/top?apikey=ZTk2YjY4MjMtMDAzYy00MTg4LWE2MjYtZDIzNjJmMmM0YTdm"
-//   const xhr = $.getJSON(url);
-//
-//   xhr.done(function(data) {
-//     if (xhr.status !== 200) {
-//       return;
-//     }
-//     console.log(data);
-//     console.log(data.tracks[0].previewURL);
-//     // for (let i = 0; )
-//     console.log($("#src0"));
-//     let source0 = $("<source>")
-//     source0.prop("src", data.tracks[0].previewURL);
-//     source0.prop("type", "audio/mpeg");
-//     $("#ch0").append(source0);
-//     let source1 = $("<source>")
-//     source1.prop("src", data.tracks[1].previewURL);
-//     source1.prop("type", "audio/mpeg");
-//     $("#ch1").append(source1);
-//
-//
-//   });
-// };
-// getTop();
+  });
+};
+getTop();
