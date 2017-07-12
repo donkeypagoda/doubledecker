@@ -49,8 +49,11 @@ const width = 700;
 const height = 400;
 const left = (screen.width / 2) - (width / 2);
 const upper = (screen.height / 2) - (height / 2);
-// const templateSource = document.getElementById('result-template').innerHTML;
-// const resultsTemplate = Handlebars.compile(templateSource);
+const templateSource = document.getElementById('result-template').innerHTML;
+const resultsTemplate = Handlebars.compile(templateSource);
+console.log(templateSource);
+console.log(resultsTemplate);
+
 
 var napsterAPI = 'https://api.napster.com';
 const APIKEY = "NjFiOWQ5ODktYmI5OS00YzlmLWIzYmMtMTM4ZWQ5ODIyMzJk";
@@ -73,10 +76,13 @@ function fetchUserData(accessToken){
 function login(){
 	window.addEventListener('message',(event) => {
     var hash = JSON.parse(event.data);
+    // now I'm working on the premise that this section isn't working - fuck
     console.log(hash);
     if (hash.type === 'access_token') {
       fetchUserData(hash.access_token)
       	.then((data) => {
+          // I was working on the concept that this section wasn't working
+          // console.log(data);
         	loginSection.hide();
           result.html(resultsTemplate(data.me));
           result.show();
