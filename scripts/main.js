@@ -14,14 +14,15 @@ const webSource1 = audioCtx.createBufferSource(ch1);
 const gain0 = audioCtx.createGain();
 const gain1 = audioCtx.createGain();
 
-let faderValue = 5;
+let faderValue = 0.5;
 
-webSource0.connect(gain0);
+
 // source0.connect(gain0);
+webSource0.connect(gain0);
 gain0.connect(audioCtx.destination);
 
-webSource0.connect(gain0);
 // source1.connect(gain1);
+webSource1.connect(gain1);
 gain1.connect(audioCtx.destination);
 
 
