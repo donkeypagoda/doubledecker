@@ -91,11 +91,12 @@ function login(){
     }
   }, false);
 
-	window.open(
-  	`${oauthURL}&redirect_uri=${redirectURI}`,
-  	'Napster',
-    `menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=${width},height=${height},top=${upper},left=${left}`
-  );
+window.location = `${oauthURL}&redirect_uri=${redirectURI}`;
+	// window.open(
+  // 	`${oauthURL}&redirect_uri=${redirectURI}`,
+  // 	'Napster',
+  //   `menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=${width},height=${height},top=${upper},left=${left}`
+  // );
 }
 $("button").on("click", () => {
  login();
