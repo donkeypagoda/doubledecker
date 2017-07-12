@@ -9,11 +9,11 @@
     <script type="text/javascript" src="scripts/keys.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
     <script type="text/javascript" src="scripts/napster.js"></script>
-    <script src="scripts/handlebars.min.js"></script>
+    <!-- <script src="scripts/handlebars.min.js"></script> -->
     <script defer type="text/javascript" src="scripts/materialize.min.js"></script>
     <script defer type="text/javascript" src="scripts/main.js"></script>
 
-    <script id="result-template" type="text/x-handlebars-template">
+    <!-- <script id="result-template" type="text/x-handlebars-template">
       <dl>
         <img src="{{avatar}}">
         <dt>User Name</dt>
@@ -27,7 +27,8 @@
         <dt>Napster ID</dt>
         <dd>{{id}}</dd>
       </dl>
-    </script>
+    </script> -->
+
   </head>
   <body>
     <div class="gradient">
@@ -40,13 +41,15 @@
         <div class="row">
           <div class="center">
             <audio id="ch0" controls>
-                <source id="src0" src="media/dumbfunk.mp3">
+                <!-- <source id="src0" src="media/dumbfunk.mp3"> -->
               </audio>
               <audio id="ch1" controls>
-                <source id="src1" src="media/dumblounge.mp3">
+                <!-- <source id="src1" src="media/dumblounge.mp3"> -->
               </audio>
               <div class="faderville">
+                <label>XFADER</label>
                 <input id="xfader" type="range" min="0" max="1.0" step="0.01" value="0.5">
+                <label>DELAY</label>
                 <input id="delay" type="range" min="0" max="1.0" step="0.01" value="0.5">
               </div>
             </div>
@@ -58,6 +61,7 @@
                 <button id="loginButton" >Log In!</button>
               </div>
               <div id="result">
+                <iframe id="player-frame"></iframe>
               </div>
             </div>
           </div>

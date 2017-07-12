@@ -16,7 +16,6 @@ const gain1 = audioCtx.createGain();
 
 let faderValue = 0.5;
 
-
 // source0.connect(gain0);
 webSource0.connect(gain0);
 gain0.connect(audioCtx.destination);
@@ -40,23 +39,43 @@ $("#xfader").on("input", function(event){
 
 
 Napster.init({
-  consumerKey: "NjFiOWQ5ODktYmI5OS00YzlmLWIzYmMtMTM4ZWQ5ODIyMzJk"
+  consumerKey: coniferNapsterKey,
+  // version: "v2.2",
+  // catalog: "EN",
+  // player: "#player-frame"
 });
 
-let trackList = [];
+
+
+const searchString = window.location.search.substring(1)
+const searchStringObj = { [searchString.split('=')[0]] : searchString.split('=')[1]};
+// console.log(searchStringObj);
+
+if(searchStringObj.code){
+  window.localStorage.setItem("code", searchStringObj.code);
+  window.location = "/";
+}
+
+if (window.localStorage.getItem("code") != null){
+  $("#login_section").hide();
+}
+
+
+
+
 
 // ATTEMPTING THE OAUTH
-const width = 700;
-const height = 400;
-const left = (screen.width / 2) - (width / 2);
-const upper = (screen.height / 2) - (height / 2);
-const templateSource = document.getElementById('result-template').innerHTML;
-const resultsTemplate = Handlebars.compile(templateSource);
-console.log(templateSource);
-console.log(resultsTemplate);
+// const width = 700;
+// const height = 400;
+// const left = (screen.width / 2) - (width / 2);
+// const upper = (screen.height / 2) - (height / 2);
+// const templateSource = document.getElementById('result-template').innerHTML;
+// const resultsTemplate = Handlebars.compile(templateSource);
+// console.log(templateSource);
+// console.log(resultsTemplate);
 
 
-var napsterAPI = 'https://api.napster.com';
+const napsterAPI = 'https://api.napster.com';
 const APIKEY = "NjFiOWQ5ODktYmI5OS00YzlmLWIzYmMtMTM4ZWQ5ODIyMzJk";
 const oauthURL = `${napsterAPI}/oauth/authorize?client_id=${APIKEY}&response_type=code`;
 const redirectURI = "http://localhost:3000";
@@ -65,46 +84,66 @@ const loginSection = $("#login_section");
 const result = $("#result");
 
 
-function fetchUserData(accessToken){
-	return $.ajax({
-  	url: `${napsterAPI}/v2.1/me`,
-    headers: {
-      'Authorization': 'Bearer ' + accessToken
-    }
-  });
-}
+// function fetchUserData(accessToken){
+//
+// 	return $.ajax({
+//   	url: `https://api.napster.com/v2.2/me`,
+//     headers: {
+//       'Authorization': 'Bearer ' + accessToken
+//     }
+//   });
+// }
 
-function login(){
-	window.addEventListener('message',(event) => {
-    var hash = JSON.parse(event.data);
-    // now I'm working on the premise that this section isn't working - fuck
-    console.log(hash);
-    if (hash.type === 'access_token') {
-      fetchUserData(hash.access_token)
-      	.then((data) => {
-          // I was working on the concept that this section wasn't working
-          // console.log(data);
-        	loginSection.hide();
-          result.html(resultsTemplate(data.me));
-          result.show();
-        });
-    }
-  }, false);
-
-window.location = `${oauthURL}&redirect_uri=${redirectURI}`;
-	// window.open(
-  // 	`${oauthURL}&redirect_uri=${redirectURI}`,
-  // 	'Napster',
-  //   `menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=${width},height=${height},top=${upper},left=${left}`
-  // );
-}
+// function login(){
+// 	window.addEventListener('message',(event) => {
+//     var hash = JSON.parse(event.data);
+//     if (hash.type === 'access_token') {
+//       fetchUserData(hash.access_token)
+//       	.then((data) => {
+//         	// loginSection.hide();
+//           result.html(resultsTemplate(data.me));
+//           result.show();
+//         });
+//     }
+//   }, false);
+//
+//
+// }
 $("button").on("click", () => {
- login();
+  window.location = `${oauthURL}&redirect_uri=${redirectURI}`;
+
 });
 
+// Scott's code for obtaining the code/token
+
+
+if (window.localStorage.getItem("code")) {
+  // console.log('code okay!');
+  $.ajax({
+   url: "https://api.napster.com/oauth/access_token",
+   method: "POST",
+   data: {
+     client_id: coniferNapsterKey,
+     client_secret: coniferNapsterSecret,
+     response_type: 'code',
+     code: window.localStorage.getItem("code"),
+     grant_type: 'authorization_code',
+    //  redirect_uri: "http://elastic-eggs.surge.sh/"
+   }
+  }).done((data) => {
+    console.log('data', data);
+
+    Napster.member.set({
+      accessToken: data.access_token,
+      refreshToken: data.refresh_token
+    });
 
 
 
+  }).fail((err) => {
+    console.log('error', err);
+  })
+}
 
 
 // THIS IS THE NON-OAUTH METHOD FOR 30SECOND SAMPLES
