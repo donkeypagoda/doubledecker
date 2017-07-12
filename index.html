@@ -30,30 +30,35 @@
     </script>
   </head>
   <body>
-    <div class="content">
-      <div class="row">
-        <div class="center decks">
-          <img src="media/xrayDJ.jpg">
-        </div>
-      </div>
-      <div class="row">
-        <div class="center">
-          <audio id="ch0" controls>
-              <!-- <source id="src0" src="media/dumbfunk.mp3"> -->
-            </audio>
-            <audio id="ch1" controls>
-              <!-- <source id="src1" src="media/dumblounge.mp3"> -->
-            </audio>
-            <input id="xfader" type="range" min="0" max="1.0" step="0.01" value="0.5">
+    <div class="gradient">
+      <div class="content">
+        <div class="row">
+          <div class="center decks">
+            <img src="media/xrayDJ.jpg">
           </div>
         </div>
         <div class="row">
           <div class="center">
-            <div id="login_section">
-              <p>Login to napster here!</p>
-              <button id="loginButton" >Log In!</button>
+            <audio id="ch0" controls>
+                <source id="src0" src="media/dumbfunk.mp3">
+              </audio>
+              <audio id="ch1" controls>
+                <source id="src1" src="media/dumblounge.mp3">
+              </audio>
+              <div class="faderville">
+                <input id="xfader" type="range" min="0" max="1.0" step="0.01" value="0.5">
+                <input id="delay" type="range" min="0" max="1.0" step="0.01" value="0.5">
+              </div>
             </div>
-            <div id="result">
+          </div>
+          <div class="row">
+            <div class="center">
+              <div id="login_section">
+                <p>Login to napster here!</p>
+                <button id="loginButton" >Log In!</button>
+              </div>
+              <div id="result">
+              </div>
             </div>
           </div>
         </div>
