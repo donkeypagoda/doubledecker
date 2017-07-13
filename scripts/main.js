@@ -1,9 +1,22 @@
 // the Web Audio Stuff
 const audioCtx = new AudioContext();
+const ch0 = document.querySelector("#ch0");
+const src0 = audioCtx.createBufferSource(ch0);
+const ch1 = document.querySelector("#ch1");
+const src1 = audioCtx.createBufferSource(ch1);
 
-// webmedia
-const webSource0 = audioCtx.createBufferSource(ch0);
-const webSource1 = audioCtx.createBufferSource(ch1);
+// // TUNA
+// var tuna = new Tuna(audioCtx);
+// var chorus = new tuna.Chorus({
+//     rate: 1.5,
+//     feedback: 0.2,
+//     delay: 0.0045,
+//     bypass: 0
+// });
+// var input = audioCtx.createGain();
+// var output = audioCtx.createGain();
+// input.connect(chorus);
+// chorus.connect(output);
 
 
 
