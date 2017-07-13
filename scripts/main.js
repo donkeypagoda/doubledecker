@@ -5,7 +5,7 @@ const src0 = audioCtx.createBufferSource(ch0);
 const ch1 = document.querySelector("#ch1");
 const src1 = audioCtx.createBufferSource(ch1);
 
-// 
+//
 // var doobieDelay = audioCtx.createDelay(5.0);
 // doobieDelay.delayTime(400);
 // src0.connect(doobieDelay);
@@ -29,7 +29,7 @@ const src1 = audioCtx.createBufferSource(ch1);
 
 
 // INTERFACE BULLSHIT
-let faderValue = 0.5;
+let faderValue = 0.0;
 
 function faderMath(faderValue){
   ch0.volume = Math.abs(faderValue - 1);

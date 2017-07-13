@@ -13,8 +13,8 @@
     <script defer type="text/javascript" src="scripts/materialize.min.js"></script>
     <script defer type="text/javascript" src="scripts/main.js"></script>
   </head>
-  <body>
-    <div class="gradient">
+  <body class="gradient">
+    <div>
       <div class="content">
         <div class="row">
           <div class="center decks">
@@ -39,11 +39,15 @@
           </div>
           <div class="row">
             <div class="center">
-              <div id="faderville">
-                <label>XFADER</label>
-                <input id="xfader" type="range" min="0" max="1.0" step="0.01" value="0.5">
-                <label>DELAY</label>
-                <input id="delay" type="range" min="0" max="1.0" step="0.01" value="0.5">
+              <div id="faderville" class="container">
+                <div class="row">
+                  <label>XFADER</label>
+                  <input id="xfader" type="range" min="0" max="1.0" step="0.01" value="0.5">
+                </div>
+                <div class="row">
+                  <label>DELAY</label>
+                  <input id="delay" type="range" min="0" max="1.0" step="0.01" value="0.5">
+                </div>
               </div>
             </div>
           </div>
