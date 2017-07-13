@@ -1,35 +1,15 @@
-// the Web Audio Stuff
+
 const audioCtx = new AudioContext();
 const ch0 = document.querySelector("#ch0");
-const src0 = audioCtx.createBufferSource(ch0);
 const ch1 = document.querySelector("#ch1");
-const src1 = audioCtx.createBufferSource(ch1);
-
-//
-// var doobieDelay = audioCtx.createDelay(5.0);
-// doobieDelay.delayTime(400);
-// src0.connect(doobieDelay);
-// doobieDelay.connect(audioCtx.destination);
 
 
-
-// // TUNA
-// var tuna = new Tuna(audioCtx);
-// var chorus = new tuna.Chorus({
-//     rate: 1.5,
-//     feedback: 0.2,
-//     delay: 0.0045,
-//     bypass: 0
-// });
-// var input = audioCtx.createGain();
-// var output = audioCtx.createGain();
-// input.connect(chorus);
-// chorus.connect(output);
 
 
 
 // INTERFACE BULLSHIT
-let faderValue = 0.0;
+let faderValue = 0;
+let delayFaderValue = 0;
 
 function faderMath(faderValue){
   ch0.volume = Math.abs(faderValue - 1);
@@ -43,7 +23,7 @@ $("#xfader").on("input", function(event){
 });
 
 let leftPick = "";
-let source0 = $("<source>");
+let sourceTag0 = $("<source>");
 $("#leftList").on("click", function(event){
   leftPick = $(event.target).find("source").attr("src");
   // console.log(leftPick);
@@ -53,17 +33,18 @@ $("#leftList").on("click", function(event){
 function changeAudio0(sourceUrl) {
     let audio = $("#ch0");
     audio.empty();
-    let source0 = $("<source>");
-    source0.prop("src", sourceUrl)
-    source0.prop("type", "audio/mpeg");
-    $("#ch0").append(source0);
+    let sourceTag0 = $("<source>");
+    sourceTag0.prop("src", sourceUrl)
+    sourceTag0.prop("type", "audio/mpeg");
+    sourceTag0.prop("id", "src0");
+    $("#ch0").append(sourceTag0);
     audio[0].pause();
     audio[0].load();
     audio[0].oncanplaythrough = audio[0].play();
 }
 
 let rightPick = "";
-let source1 = $("<source>");
+let sourceTag1 = $("<source>");
 $("#rightList").on("click", function(event){
   rightPick = $(event.target).find("source").attr("src");
   // console.log(rightPick);
@@ -73,10 +54,11 @@ $("#rightList").on("click", function(event){
 function changeAudio1(sourceUrl) {
     let audio = $("#ch1");
     audio.empty();
-    let source1 = $("<source>");
-    source1.prop("src", sourceUrl)
-    source1.prop("type", "audio/mpeg");
-    $("#ch1").append(source1);
+    let sourceTag1 = $("<source>");
+    sourceTag1.prop("src", sourceUrl);
+    sourceTag1.prop("type", "audio/mpeg");
+    sourceTag1.prop("id", "src1");
+    $("#ch1").append(sourceTag1);
     audio[0].pause();
     audio[0].load();
     audio[0].oncanplaythrough = audio[0].play();
@@ -94,15 +76,17 @@ function getTopTracks(){
       return;
     }
 
-    let source0 = $("<source>")
-    source0.prop("src",data.tracks[1].previewURL)
-    source0.prop("type", "audio/mpeg");
-    $("#ch0").append(source0);
+    let sourceTag0 = $("<source>")
+    sourceTag0.prop("src",data.tracks[1].previewURL)
+    sourceTag0.prop("type", "audio/mpeg");
+    sourceTag0.prop("id", "src0");
+    $("#ch0").append(sourceTag0);
 
-    let source1 = $("<source>")
-    source1.prop("src", data.tracks[2].previewURL)
-    source1.prop("type", "audio/mpeg");
-    $("#ch1").append(source1);
+    let sourceTag1 = $("<source>")
+    sourceTag1.prop("src", data.tracks[2].previewURL)
+    sourceTag1.prop("type", "audio/mpeg");
+    sourceTag1.prop("id", "src1");
+    $("#ch1").append(sourceTag1);
 
 
     // making lists of track choices0
