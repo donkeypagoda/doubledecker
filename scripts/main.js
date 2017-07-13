@@ -8,18 +8,22 @@ function faderMath(faderValue){
   ch1.volume = faderValue;
 }
 
-
 $("#xfader").on("input", function(event){
   faderValue = $("#xfader").val();
   faderMath(faderValue);
 });
 
+$("#icon").on("click", function(event){
+  console.log(event.target);
+  $("#magic").toggleClass("hidden");
+
+});
 
 function changeAudio(sourceUrl, audioId, srcId) {
     let audio = $(audioId);
     audio.empty();
     let sourceTag = $("<source>");
-    sourceTag.prop("src", sourceUrl)
+    sourceTag.prop("src", sourceUrl);
     sourceTag.prop("type", "audio/mpeg");
     sourceTag.prop("id", srcId);
     $(audioId).append(sourceTag);
@@ -42,21 +46,6 @@ $("#rightList").on("click", function(event){
   changeAudio(rightPick, "#ch1", "#src1");
 });
 
-function changeAudio1(sourceUrl) {
-    let audio = $("#ch1");
-    audio.empty();
-    let sourceTag1 = $("<source>");
-    sourceTag1.prop("src", sourceUrl);
-    sourceTag1.prop("type", "audio/mpeg");
-    sourceTag1.prop("id", "src1");
-    $("#ch1").append(sourceTag1);
-    audio[0].pause();
-    audio[0].load();
-    audio[0].oncanplaythrough = audio[0].play();
-}
-
-
-
 // THIS IS THE NON-OAUTH METHOD FOR 30SECOND SAMPLES FROM NAPSTER
 function getTopTracks(){
   const url = "https://api.napster.com/v2.1/tracks/top?apikey=" + coniferNapsterKey;
@@ -66,14 +55,14 @@ function getTopTracks(){
     if (xhr.status !== 200) {
       return;
     }
-    let sourceTag0 = $("<source>")
-    sourceTag0.prop("src",data.tracks[1].previewURL)
+    let sourceTag0 = $("<source>");
+    sourceTag0.prop("src",data.tracks[1].previewURL);
     sourceTag0.prop("type", "audio/mpeg");
     sourceTag0.prop("id", "src0");
     $("#ch0").append(sourceTag0);
 
-    let sourceTag1 = $("<source>")
-    sourceTag1.prop("src", data.tracks[2].previewURL)
+    let sourceTag1 = $("<source>");
+    sourceTag1.prop("src", data.tracks[2].previewURL);
     sourceTag1.prop("type", "audio/mpeg");
     sourceTag1.prop("id", "src1");
     $("#ch1").append(sourceTag1);
@@ -101,7 +90,6 @@ function getTopTracks(){
       list1.append(butty1);
       $("#rightList").append(list1);
     }
-
   });
 }
 getTopTracks();
