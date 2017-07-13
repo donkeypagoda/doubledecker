@@ -75,7 +75,7 @@ function getTopTracks(){
     if (xhr.status !== 200) {
       return;
     }
-
+    console.log(data);
     let sourceTag0 = $("<source>")
     sourceTag0.prop("src",data.tracks[1].previewURL)
     sourceTag0.prop("type", "audio/mpeg");
