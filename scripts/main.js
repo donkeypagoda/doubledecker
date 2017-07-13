@@ -5,6 +5,8 @@ const audioCtx = new AudioContext();
 const webSource0 = audioCtx.createBufferSource(ch0);
 const webSource1 = audioCtx.createBufferSource(ch1);
 
+
+
 // INTERFACE BULLSHIT
 let faderValue = 0.5;
 
@@ -82,7 +84,7 @@ function getTopTracks(){
     $("#ch1").append(source1);
 
 
-    // making lists of track choices
+    // making lists of track choices0
     let list0 = $("<ul>");
     for (let i = 0; i < data.tracks.length; i++){
       let butty0 = $("<button>");
@@ -93,7 +95,7 @@ function getTopTracks(){
       list0.append(butty0);
       $("#leftList").append(list0);
     }
-
+    // making lists of track choices1
     let list1 = $("<ul>");
     for (let j = 0; j < data.tracks.length; j++){
       let butty1 = $("<button>");
