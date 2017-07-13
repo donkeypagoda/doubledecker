@@ -108,15 +108,3 @@ function getTopTracks(){
   });
 }
 getTopTracks();
-
-function getTopArtists(){
-  const artUrl = "https://api.napster.com/v2.1/artists/top?apikey=" + coniferNapsterKey;
-  const xhr1 = $.getJSON(artUrl);
-  xhr1.done(function(data){
-    if (xhr1.status !== 200){
-      return;
-    }
-    console.log(data);
-  })
-}
-getTopArtists();
