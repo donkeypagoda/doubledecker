@@ -1,13 +1,5 @@
-
-const audioCtx = new AudioContext();
 const ch0 = document.querySelector("#ch0");
 const ch1 = document.querySelector("#ch1");
-
-
-
-
-
-// INTERFACE BULLSHIT
 let faderValue = 0;
 let delayFaderValue = 0;
 
@@ -16,39 +8,38 @@ function faderMath(faderValue){
   ch1.volume = faderValue;
 }
 
-// event handlers
+
 $("#xfader").on("input", function(event){
   faderValue = $("#xfader").val();
   faderMath(faderValue);
 });
 
-let leftPick = "";
-let sourceTag0 = $("<source>");
-$("#leftList").on("click", function(event){
-  leftPick = $(event.target).find("source").attr("src");
-  // console.log(leftPick);
-  changeAudio0(leftPick);
-});
 
-function changeAudio0(sourceUrl) {
-    let audio = $("#ch0");
+function changeAudio(sourceUrl, audioId, srcId) {
+    let audio = $(audioId);
     audio.empty();
-    let sourceTag0 = $("<source>");
-    sourceTag0.prop("src", sourceUrl)
-    sourceTag0.prop("type", "audio/mpeg");
-    sourceTag0.prop("id", "src0");
-    $("#ch0").append(sourceTag0);
+    let sourceTag = $("<source>");
+    sourceTag.prop("src", sourceUrl)
+    sourceTag.prop("type", "audio/mpeg");
+    sourceTag.prop("id", srcId);
+    $(audioId).append(sourceTag);
     audio[0].pause();
     audio[0].load();
     audio[0].oncanplaythrough = audio[0].play();
 }
 
+let leftPick = "";
+let sourceTag0 = $("<source>");
+$("#leftList").on("click", function(event){
+  leftPick = $(event.target).find("source").attr("src");
+  changeAudio(leftPick, "#ch0", "#src0");
+});
+
 let rightPick = "";
 let sourceTag1 = $("<source>");
 $("#rightList").on("click", function(event){
   rightPick = $(event.target).find("source").attr("src");
-  // console.log(rightPick);
-  changeAudio1(rightPick);
+  changeAudio(rightPick, "#ch1", "#src1");
 });
 
 function changeAudio1(sourceUrl) {
@@ -75,7 +66,6 @@ function getTopTracks(){
     if (xhr.status !== 200) {
       return;
     }
-    console.log(data);
     let sourceTag0 = $("<source>")
     sourceTag0.prop("src",data.tracks[1].previewURL)
     sourceTag0.prop("type", "audio/mpeg");
