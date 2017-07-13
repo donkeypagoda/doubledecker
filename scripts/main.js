@@ -116,7 +116,7 @@ function getTopArtists(){
     if (xhr1.status !== 200){
       return;
     }
-    // console.log(data);
+    console.log(data);
   })
 }
 getTopArtists();
