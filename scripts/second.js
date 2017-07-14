@@ -10,7 +10,7 @@ let delay0 = new tuna0.Delay({
     delayTime: 0,    //1 to 10000 milliseconds
     wetLevel: 0.0,    //0 to 1+
     dryLevel: 1.0,       //0 to 1+
-    cutoff: 800,      //cutoff frequency of the built in lowpass-filter. 20 to 22050
+    cutoff: 2500,      //cutoff frequency of the built in lowpass-filter. 20 to 22050
     bypass: 0
 });
 let delay1 = new tuna1.Delay({
@@ -18,7 +18,7 @@ let delay1 = new tuna1.Delay({
     delayTime: 0,    //1 to 10000 milliseconds
     wetLevel: 0.0,    //0 to 1+
     dryLevel: 1.0,       //0 to 1+
-    cutoff: 800,      //cutoff frequency of the built in lowpass-filter. 20 to 22050
+    cutoff: 2500,      //cutoff frequency of the built in lowpass-filter. 20 to 22050
     bypass: 0
 });
 
