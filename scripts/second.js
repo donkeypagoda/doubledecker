@@ -24,11 +24,13 @@ let delay1 = new tuna1.Delay({
 
 
 var gainNode0 = audioCtx.createGain();
+gainNode0.gain.value = 1;
 source0.connect(delay0);
 delay0.connect(gainNode0);
 gainNode0.connect(audioCtx.destination);
 
 var gainNode1 = audioCtx.createGain();
+gainNode1.gain.value = 0;
 source1.connect(delay1);
 delay1.connect(gainNode1);
 gainNode1.connect(audioCtx.destination);
