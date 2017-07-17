@@ -43,9 +43,7 @@ let delayTimeFaderValue = 0;
 
 function faderMath(faderValue){
   gainNode0.gain.value = Math.abs(faderValue - 1);
-  // ch0.volume = Math.abs(faderValue - 1);
   gainNode1.gain.value = faderValue;
-  // ch1.volume = faderValue;
 }
 
 function delayMixFaderMath(delayMixFaderValue){
@@ -60,7 +58,6 @@ function delayTimeFaderMath(delayTimeFaderValue){
   delay1.delayTime = delayTimeFaderValue;
 }
 
-// event handlers
 $("#xfader").on("input", function(event){
   faderValue = $("#xfader").val();
   faderMath(faderValue);

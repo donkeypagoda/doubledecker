@@ -46,7 +46,6 @@ $("#rightList").on("click", function(event){
   changeAudio(rightPick, "#ch1", "#src1");
 });
 
-// THIS IS THE NON-OAUTH METHOD FOR 30SECOND SAMPLES FROM NAPSTER
 function getTopTracks(){
   const url = "https://api.napster.com/v2.1/tracks/top?apikey=" + coniferNapsterKey;
   const xhr = $.getJSON(url);
@@ -67,8 +66,6 @@ function getTopTracks(){
     sourceTag1.prop("id", "src1");
     $("#ch1").append(sourceTag1);
 
-
-    // making lists of track choices0
     let list0 = $("<ul>");
     for (let i = 0; i < data.tracks.length; i++){
       let butty0 = $("<button>");
@@ -79,7 +76,7 @@ function getTopTracks(){
       list0.append(butty0);
       $("#leftList").append(list0);
     }
-    // making lists of track choices1
+
     let list1 = $("<ul>");
     for (let j = 0; j < data.tracks.length; j++){
       let butty1 = $("<button>");
